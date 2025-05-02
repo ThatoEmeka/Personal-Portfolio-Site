@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Thato Emeka Nwamadi - Visionary Entrepreneur & Software Engineer | Driving Innovation in Tech, Real Estate, Branding & Food. Explore his journey and ventures.">
+    <meta name="keywords" content="Thato Nwamadi, entrepreneur, software engineer, South Africa, Inevitable Tech, Gad Real Estates, Inevitable Brands, Chops Paza, innovation, investment, technology, real estate, timeline, history, logo, svg, software development, glitch">
+    <title>Thato Emeka Nwamadi - Entrepreneur | Software Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide.js"></script>
+
+    <style>
+        /* Custom Styles */
+        :root {
+            --bg-primary: #1a1a1a; /* Charcoal Black */
+            --bg-secondary: #2c2c2c; /* Darker Gray */
+            --bg-card: #212121; /* Slightly lighter charcoal for cards */
+            --text-primary: #f1f5f9; /* Slate 100 (Off-white) */
+            --text-secondary: #a1a1aa; /* Zinc 400 (Light Gray) */
+            --accent: #3b82f6; /* Blue 500 */
+            --accent-hover: #2563eb; /* Blue 600 */
+            --glitch-color-1: rgba(0, 255, 255, 0.8); /* Cyan */
+            --glitch-color-2: rgba(255, 0, 255, 0.8); /* Magenta */
+            --border-color: rgba(255, 255, 255, 0.1); /* Subtle white border */
+            --lava-color-1: rgba(59, 130, 246, 0.6); /* Blue 500 with opacity */
+            --lava-color-2: rgba(96, 165, 250, 0.5); /* Blue 400 with opacity */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-secondary);
+            line-height: 1.7;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            position: relative; /* Needed for canvas positioning */
+        }
+
+        /* Lava Lamp Canvas Background */
+        #lava-lamp-bg {
+            position: fixed; /* Fixed position to stay behind content */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Place behind all other content */
+            filter: blur(60px) contrast(30); /* Key effect for merging blobs */
+            background: var(--bg-primary); /* Fallback background */
+            /* Note: High blur/contrast can be performance intensive */
+        }
+
+        /* Main content wrapper to ensure it's above the canvas */
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            background-color: transparent; /* Allow body background (or canvas) to show through */
+        }
+
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation */
+        nav {
+            transition: background-color 0.3s ease;
+        }
+        nav.scrolled {
+            background-color: rgba(26, 26, 26, 0.85); /* Semi-transparent charcoal on scroll */
+            backdrop-filter: blur(10px);
+        }
+        .nav-link {
+             @apply px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:bg-gray-700 hover:text-white transition-colors duration-200;
+        }
+        .nav-link.active {
+             @apply bg-gray-900 text-white;
+        }
+
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            /* Background is now handled by the canvas + body bg */
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+         .hero-content {
+            z-index: 2; /* Ensure hero text is above potential overlays */
+            position: relative;
+         }
+
+        /* Animated Name */
+        .name-char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(40px) rotateX(-90deg); /* Start rotated */
+            transition: opacity 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: clamp(2.5rem, 9vw, 6rem); /* Slightly larger max size */
+            line-height: 1.1;
+            transform-origin: bottom center;
+        }
+
+        .hero-tagline {
+            color: var(--text-secondary);
+            font-size: clamp(1rem, 3vw, 1.25rem);
+            max-width: 650px; /* Slightly wider */
+            margin: 1.5rem auto 0;
+            font-weight: 300;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease-out 1s forwards; /* Delay after tagline */
+        }
+
+        /* T.E.N Glitch Animation */
+        .glitch-container {
+            margin: 2rem auto 0; /* Space below tagline */
+            position: relative;
+            opacity: 0; /* Start hidden */
+            animation: fadeIn 1s ease-out 1.5s forwards; /* Fade in after tagline */
+            width: clamp(150px, 30vw, 250px); /* Responsive width */
+            height: auto;
+        }
+
+        .glitch-text {
+            font-family: 'Press Start 2P', cursive; /* Blocky font */
+            font-size: clamp(2rem, 8vw, 4rem); /* Responsive font size */
+            color: var(--text-primary);
+            position: relative; /* Needed for pseudo-elements */
+            animation: glitch-main 5s infinite linear alternate-reverse;
+        }
+
+        /* Glitch pseudo-elements */
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text); /* Use text from data attribute */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary); /* Match background to hide original text */
+            overflow: hidden;
+        }
+
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--glitch-color-1); /* Cyan shadow */
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            animation: glitch-before 1.5s infinite linear alternate-reverse;
+        }
+
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -2px 0 var(--glitch-color-2), 2px 2px var(--glitch-color-1); /* Magenta and Cyan shadows */
+            clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+            animation: glitch-after 1s infinite linear alternate-reverse;
+        }
+
+        /* Glitch Keyframes */
+        @keyframes glitch-main {
+          0% { transform: translate(0); }
+          5% { transform: translate(2px, -3px) skewX(-5deg); }
+          10% { transform: translate(-3px, 2px); }
+          15% { transform: translate(0); }
+          /* Add more steps for varied glitching */
+          100% { transform: translate(0); }
+        }
+        @keyframes glitch-before {
+          0% { clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%); transform: translate(-0.05em, -0.01em); }
+          14% { clip-path: polygon(0 40%, 100% 40%, 100% 50%, 0 50%); transform: translate(0.02em, 0.01em); }
+          25% { clip-path: polygon(0 80%, 100% 80%, 100% 100%, 0 100%); transform: translate(-0.05em, 0); }
+          42% { clip-path: polygon(0 45%, 100% 45%, 100% 55%, 0 55%); transform: translate(0.05em, 0.01em); }
+          50% { clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%); transform: translate(-0.05em, 0.01em); }
+          62% { clip-path: polygon(0 60%, 100% 60%, 100% 70%, 0 70%); transform: translate(0.02em, 0.02em); }
+          75% { clip-path: polygon(0 30%, 100% 30%, 100% 40%, 0 40%); transform: translate(-0.05em, 0.01em); }
+          86% { clip-path: polygon(0 75%, 100% 75%, 100% 85%, 0 85%); transform: translate(0.05em, 0); }
+          100% { clip-path: polygon(0 55%, 100% 55%, 100% 65%, 0 65%); transform: translate(-0.02em, 0.01em); }
+        }
+        @keyframes glitch-after {
+          0% { clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%); transform: translate(0.02em, 0.01em); }
+          14% { clip-path: polygon(0 15%, 100% 15%, 100% 25%, 0 25%); transform: translate(-0.05em, -0.01em); }
+          25% { clip-path: polygon(0 60%, 100% 60%, 100% 70%, 0 70%); transform: translate(0.02em, 0.02em); }
+          42% { clip-path: polygon(0 85%, 100% 85%, 100% 95%, 0 95%); transform: translate(0.05em, 0); }
+          50% { clip-path: polygon(0 40%, 100% 40%, 100% 50%, 0 50%); transform: translate(-0.05em, 0.01em); }
+          62% { clip-path: polygon(0 5%, 100% 5%, 100% 15%, 0 15%); transform: translate(0.05em, 0.01em); }
+          75% { clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%); transform: translate(-0.05em, 0.02em); }
+          86% { clip-path: polygon(0 20%, 100% 20%, 100% 30%, 0 30%); transform: translate(0.02em, -0.01em); }
+          100% { clip-path: polygon(0 90%, 100% 90%, 100% 100%, 0 100%); transform: translate(-0.05em, 0); }
+        }
+
+
+        /* Section Styling */
+        .section-padding {
+            @apply px-6; /* Keep horizontal padding consistent */
+        }
+        /* Default vertical padding */
+        #about, #history, #software-engineer, #contact {
+             @apply py-20 md:py-28;
+        }
+        /* Increased vertical padding for Ventures */
+        #ventures {
+             @apply py-28 md:py-40; /* Increased vertical padding */
+        }
+
+        .section-heading {
+            font-size: clamp(2.2rem, 6vw, 3.5rem); /* Slightly larger */
+            font-weight: 700; /* Bolder */
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .section-subheading {
+            font-size: clamp(1rem, 3vw, 1.15rem); /* Slightly larger */
+            font-weight: 300;
+            color: var(--text-secondary);
+            margin-bottom: 4rem;
+            text-align: center;
+            max-width: 750px; /* Wider */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Venture Card */
+        .venture-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem 1.5rem; /* Adjusted padding */
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .venture-card:hover {
+            transform: translateY(-8px) scale(1.02); /* More pronounced hover */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            border-color: rgba(59, 130, 246, 0.5); /* Accent color border on hover */
+        }
+
+        .venture-card .icon-style {
+            width: 36px; /* Slightly smaller */
+            height: 36px;
+            color: var(--accent);
+            margin-bottom: 1.25rem;
+            stroke-width: 1.5;
+        }
+
+        .venture-card h3 {
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .venture-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem; /* Slightly smaller text */
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .venture-card a {
+            display: inline-flex; /* Use flex for icon alignment */
+            align-items: center;
+            margin-top: auto;
+            color: var(--accent);
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            padding-bottom: 2px;
+            font-size: 0.9rem;
+        }
+        .venture-card a:hover {
+            color: var(--text-primary);
+        }
+        .venture-card a .arrow-icon {
+             margin-left: 0.25rem;
+             transition: transform 0.3s ease;
+             width: 16px; height: 16px;
+        }
+         .venture-card a:hover .arrow-icon {
+             transform: translateX(3px);
+         }
+
+        /* Logo Carousel Section */
+        .logo-carousel-section {
+            @apply py-16 md:py-20; /* Padding for the section */
+            background-color: var(--bg-secondary); /* Slightly different background */
+            overflow: hidden; /* Hide overflowing logos */
+            position: relative; /* For pseudo-elements if needed */
+        }
+        .logo-carousel-container {
+            width: 100%;
+            display: flex;
+            align-items: center; /* Vertically center logos */
+            position: relative; /* Needed for absolute positioning of track */
+        }
+        .logo-track {
+            display: flex;
+            /* Double the logos for seamless looping */
+            animation: scroll 30s linear infinite;
+            width: calc(200px * 10 * 2); /* Adjust 200px (logo width + margin) and 10 (number of logos) as needed */
+        }
+        .logo-track:hover {
+            animation-play-state: paused; /* Pause on hover */
+        }
+
+        .logo-item {
+            width: 150px; /* Adjust width */
+            height: 60px; /* Adjust height */
+            margin: 0 25px; /* Spacing between logos */
+            flex-shrink: 0; /* Prevent logos from shrinking */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-item img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: grayscale(100%) opacity(0.6); /* Start grayscale and slightly transparent */
+            transition: filter 0.3s ease;
+        }
+         .logo-item:hover img {
+             filter: grayscale(0%) opacity(1); /* Full color and opacity on hover */
+         }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-200px * 10)); } /* Move left by the width of the original set of logos */
+        }
+         /* Optional: Fade edges */
+         .logo-carousel-container::before,
+         .logo-carousel-container::after {
+             content: '';
+             position: absolute;
+             top: 0;
+             bottom: 0;
+             width: 100px; /* Width of the fade */
+             z-index: 2;
+             pointer-events: none;
+         }
+         .logo-carousel-container::before {
+             left: 0;
+             background: linear-gradient(to right, var(--bg-secondary), transparent);
+         }
+         .logo-carousel-container::after {
+             right: 0;
+             background: linear-gradient(to left, var(--bg-secondary), transparent);
+         }
+
+        /* Software Engineer Section */
+        #software-engineer {
+            background-color: rgba(26, 26, 26, 0.7); /* Slightly transparent dark bg */
+            backdrop-filter: blur(5px); /* Subtle blur effect */
+        }
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            stroke-width: 1.5;
+        }
+        .se-image {
+             @apply rounded-lg shadow-lg object-cover w-full h-64 md:h-80; /* Basic styling for images */
+             border: 1px solid var(--border-color);
+        }
+
+
+        /* Timeline Section */
+        #history {
+             background-color: var(--bg-secondary); /* Different background for contrast */
+        }
+        .timeline-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        /* The vertical line */
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background-color: var(--border-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+            z-index: 0;
+        }
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            opacity: 0; /* For animation */
+            transform: translateY(50px); /* For animation */
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .timeline-item.is-visible {
+             opacity: 1;
+             transform: translateY(0);
+        }
+        /* The circle on the timeline */
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            right: -9px;
+            background-color: var(--bg-primary);
+            border: 4px solid var(--accent);
+            top: 28px; /* Adjust vertical alignment */
+            border-radius: 50%;
+            z-index: 1;
+        }
+        /* Positioning */
+        .timeline-left { left: 0; }
+        .timeline-right { left: 50%; }
+        /* Right item adjustments */
+        .timeline-right::after { left: -9px; }
+        /* Content box */
+        .timeline-content {
+            padding: 1.5rem;
+            background-color: var(--bg-card);
+            position: relative;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+         .timeline-content h3 {
+             @apply text-lg font-semibold mb-1 text-primary;
+             color: var(--text-primary);
+         }
+         .timeline-content .date {
+             @apply text-xs font-medium uppercase tracking-wider mb-3;
+             color: var(--accent);
+         }
+         .timeline-content p {
+             @apply text-sm;
+             color: var(--text-secondary);
+         }
+        /* Arrows for content boxes (Optional) */
+        .timeline-left .timeline-content::before { /* Right arrow */
+            content: " "; height: 0; position: absolute; top: 22px; width: 0; z-index: 1; right: -10px; border: medium solid var(--bg-card); border-width: 10px 0 10px 10px; border-color: transparent transparent transparent var(--bg-card);
+        }
+        .timeline-right .timeline-content::before { /* Left arrow */
+             content: " "; height: 0; position: absolute; top: 22px; width: 0; z-index: 1; left: -10px; border: medium solid var(--bg-card); border-width: 10px 10px 10px 0; border-color: transparent var(--bg-card) transparent transparent;
+        }
+        /* Responsive Timeline */
+        @media screen and (max-width: 768px) {
+            .timeline-container::after { left: 31px; }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline-item::after { left: 22px; } /* Adjust circle position */
+            .timeline-right { left: 0%; }
+            .timeline-left .timeline-content::before, .timeline-right .timeline-content::before {
+                left: -10px; border-width: 10px 10px 10px 0; border-color: transparent var(--bg-card) transparent transparent;
+            }
+            /* Adjust logo carousel animation for smaller screens if needed */
+            .logo-track {
+                 /* animation-duration: 45s; */
+            }
+            .logo-item {
+                width: 120px; /* Smaller logos on mobile */
+                margin: 0 15px;
+            }
+             .logo-carousel-container::before,
+             .logo-carousel-container::after {
+                 width: 50px; /* Smaller fade */
+             }
+             /* Adjust glitch text size on smaller screens */
+             .glitch-text {
+                 font-size: clamp(1.5rem, 6vw, 3rem);
+             }
+        }
+
+        /* Contact Button */
+        .contact-button {
+            background-color: var(--accent);
+            color: var(--text-primary);
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); /* Accent shadow */
+        }
+        .contact-button:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 2.5rem 0; /* More padding */
+            margin-top: 0; /* Removed margin-top as logo section is below */
+        }
+
+        /* Fade-in Animation */
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scroll Animation Class */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(50px); /* Slightly more distance */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <canvas id="lava-lamp-bg"></canvas>
+
+    <div class="content-wrapper">
+
+        <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 py-3 transition-all duration-300">
+            <div class="container mx-auto px-6 flex justify-between items-center">
+                <a href="#home" class="text-xl font-bold text-white">Thato Nwamadi</a>
+                <div class="hidden md:flex space-x-1">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#ventures" class="nav-link">Ventures</a>
+                    <a href="#history" class="nav-link">History</a>
+                    <a href="#software-engineer" class="nav-link">Software</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white focus:outline-none">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden bg-gray-800 mt-2 mx-4 rounded-lg shadow-lg">
+                <a href="#home" class="block px-4 py-3 text-sm text-slate-200 hover:bg-gray-700 rounded-t-lg">Home</a>
+                <a href="#about" class="block px-4 py-3 text-sm text-slate-200 hover:bg-gray-700">About</a>
+                <a href="#ventures" class="block px-4 py-3 text-sm text-slate-200 hover:bg-gray-700">Ventures</a>
+                <a href="#history" class="block px-4 py-3 text-sm text-slate-200 hover:bg-gray-700">History</a>
+                <a href="#software-engineer" class="block px-4 py-3 text-sm text-slate-200 hover:bg-gray-700">Software</a>
+                <a href="#contact" class="block px-4 py-3 text-sm text-slate-200 hover:bg-gray-700 rounded-b-lg">Contact</a>
+            </div>
+        </nav>
+
+
+        <section id="home" class="hero-section section-padding">
+            <div class="hero-content">
+                <h1 id="animated-name" class="mb-4" aria-label="Thato Emeka Nwamadi">
+                    </h1>
+                <p class="hero-tagline">
+                    Visionary entrepreneur & software engineer shaping the future of South African business through innovation in technology, real estate, branding, and culinary arts.
+                </p>
+                <div class="glitch-container">
+                    <div class="glitch-text" data-text="T.E.N">T.E.N</div>
+                </div>
+
+                <a href="#about" aria-label="Scroll down" class="absolute -bottom-16 left-1/2 transform -translate-x-1/2 text-white opacity-50 hover:opacity-100 transition-opacity animate-bounce hidden md:block">
+                     <i data-lucide="arrow-down-circle" class="w-8 h-8"></i>
+                </a>
+            </div>
+        </section>
+
+        <section id="about" class="section-padding fade-in-section">
+            <div class="container mx-auto">
+                 <h2 class="section-heading">Meet Thato Nwamadi</h2>
+                 <p class="section-subheading">
+                     Strategist. Innovator. Leader. Building impactful ventures with a relentless drive for excellence and positive change.
+                 </p>
+                <div class="max-w-4xl mx-auto text-center text-lg leading-relaxed space-y-6">
+                    <p>
+                        Thato Emeka Nwamadi is a dynamic force in South Africa's entrepreneurial ecosystem. His journey is defined by an exceptional ability to identify market gaps and a profound commitment to leveraging innovation for growth. He has successfully founded and steers multiple companies across diverse, high-impact sectors.
+                    </p>
+                    <p>
+                        Characterized by strategic acuity, resilience in the face of challenges, and a foundational belief in creating value beyond profit, Thato's leadership is transforming industries. His portfolio, spanning cutting-edge technology, strategic real estate development, compelling brand creation, and unique culinary concepts, reflects a modern, integrated approach to building sustainable and influential businesses.
+                    </p>
+                     <img src="https://placehold.co/200x200/212121/a1a1aa?text=Thato" alt="Thato Nwamadi - Placeholder" class="w-36 h-36 rounded-full mx-auto mt-12 mb-4 shadow-xl border-4 border-gray-700" onerror="this.src='https://placehold.co/200x200/212121/a1a1aa?text=Thato'; this.onerror=null;">
+                </div>
+            </div>
+        </section>
+
+        <section id="ventures" class="section-padding bg-opacity-50" style="background-color: rgba(44, 44, 44, 0.5);">
+            <div class="container mx-auto">
+                <h2 class="section-heading">Ventures & Initiatives</h2>
+                <p class="section-subheading">
+                    Driving progress and creating value across key economic sectors through focused, innovative enterprises.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+
+                    <div class="venture-card fade-in-section">
+                        <i data-lucide="cpu" class="icon-style"></i>
+                        <h3>Inevitable Tech</h3>
+                        <p>Pioneering technology solutions and services engineered for the complexities of the modern digital landscape.</p>
+                        <a href="https://www.inevitabletech.co.za/" target="_blank" rel="noopener noreferrer">
+                            Explore Tech Solutions <i data-lucide="arrow-right" class="arrow-icon"></i>
+                        </a>
+                    </div>
+
+                    <div class="venture-card fade-in-section" style="transition-delay: 0.1s;">
+                        <i data-lucide="building-2" class="icon-style"></i>
+                        <h3>Gad Real Estates</h3>
+                        <p>Strategic real estate investment, development, and management, focused on unlocking potential and building lasting value.</p>
+                        <a href="https://gadrealestates.co.za/" target="_blank" rel="noopener noreferrer">
+                            Discover Properties <i data-lucide="arrow-right" class="arrow-icon"></i>
+                        </a>
+                    </div>
+
+                    <div class="venture-card fade-in-section" style="transition-delay: 0.2s;">
+                        <i data-lucide="lightbulb" class="icon-style"></i>
+                        <h3>Inevitable Brands</h3>
+                        <p>Cultivating and scaling influential brands through data-driven insights, creative strategy, and market expertise.</p>
+                        <a href="https://brands.inevitabletech.co.za/" target="_blank" rel="noopener noreferrer">
+                            See Brand Portfolio <i data-lucide="arrow-right" class="arrow-icon"></i>
+                        </a>
+                    </div>
+
+                    <div class="venture-card fade-in-section" style="transition-delay: 0.3s;">
+                        <i data-lucide="chef-hat" class="icon-style"></i>
+                        <h3>Chops Paza</h3>
+                        <p>Crafting unique and memorable culinary experiences, celebrating local flavors with an innovative twist.</p>
+                        <a href="http://chopspaza.co.za/" target="_blank" rel="noopener noreferrer">
+                            Taste the Experience <i data-lucide="arrow-right" class="arrow-icon"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="logo-carousel-section">
+            <h3 class="text-center text-lg font-medium text-slate-400 mb-8 tracking-wider uppercase">Associated Ventures & Partners</h3>
+            <div class="logo-carousel-container">
+                <div class="logo-track">
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Tech" alt="Inevitable Tech Logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Tech'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Gad+Real+Estates" alt="Gad Real Estates Logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Gad+Real+Estates'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Brands" alt="Inevitable Brands Logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Brands'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Chops+Paza" alt="Chops Paza Logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Chops+Paza'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Partner+1" alt="Partner Logo 1" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+1'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Partner+2" alt="Partner Logo 2" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+2'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Partner+3" alt="Partner Logo 3" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+3'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Partner+4" alt="Partner Logo 4" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+4'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Partner+5" alt="Partner Logo 5" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+5'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Partner+6" alt="Partner Logo 6" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+6'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Tech" alt="Inevitable Tech Logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Tech'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Gad+Real+Estates" alt="Gad Real Estates Logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Gad+Real+Estates'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Brands" alt="Inevitable Brands Logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Brands'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Chops+Paza" alt="Chops Paza Logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Chops+Paza'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Partner+1" alt="Partner Logo 1" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+1'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Partner+2" alt="Partner Logo 2" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+2'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Partner+3" alt="Partner Logo 3" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+3'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Partner+4" alt="Partner Logo 4" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+4'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Partner+5" alt="Partner Logo 5" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+5'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Partner+6" alt="Partner Logo 6" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+6'; this.onerror=null;"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="history" class="section-padding">
+            <div class="container mx-auto">
+                <h2 class="section-heading">Journey & Milestones</h2>
+                <p class="section-subheading">
+                    Tracing the path of innovation and growth through key moments in Thato's entrepreneurial career.
+                </p>
+
+                <div class="timeline-container">
+                    <div class="timeline-item timeline-left fade-in-section">
+                        <div class="timeline-content">
+                            <span class="date">YYYY</span> <h3>Early Vision / Foundation</h3>
+                            <p>The initial spark or founding concept that set the entrepreneurial journey in motion. Describe the early vision or first steps.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item timeline-right fade-in-section" style="transition-delay: 0.1s;">
+                        <div class="timeline-content">
+                            <span class="date">YYYY</span> <h3>Launch of Inevitable Tech</h3>
+                            <p>Successfully launched the first major venture, Inevitable Tech, marking a significant entry into the technology solutions market.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item timeline-left fade-in-section" style="transition-delay: 0.2s;">
+                        <div class="timeline-content">
+                            <span class="date">YYYY</span> <h3>Expansion into Real Estate</h3>
+                            <p>Diversification into a new industry with the founding of Gad Real Estates, demonstrating strategic growth and adaptability.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item timeline-right fade-in-section" style="transition-delay: 0.3s;">
+                        <div class="timeline-content">
+                            <span class="date">YYYY - Present</span> <h3>Portfolio Growth & Impact</h3>
+                            <p>Ongoing development, launch of further ventures like Inevitable Brands and Chops Paza, achieving significant milestones and market presence.</p>
+                        </div>
+                    </div>
+                    </div>
+            </div>
+        </section>
+
+        <section id="software-engineer" class="section-padding fade-in-section">
+            <div class="container mx-auto">
+                <h2 class="section-heading">Software at the Core</h2>
+                <p class="section-subheading">
+                    Leveraging deep technical expertise to build, innovate, and scale ventures for the digital age. More than just an entrepreneur, Thato is an architect of digital solutions.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
+                    <div class="space-y-6 text-lg">
+                        <p>
+                            At the heart of Thato Nwamadi's diverse entrepreneurial portfolio lies a fundamental strength: **a deep-rooted passion and proficiency in software engineering**. This technical foundation isn't just a background skill; it's the engine driving innovation and efficiency across all his ventures.
+                        </p>
+                        <p>
+                            From architecting the backend systems for Inevitable Tech's client solutions to potentially optimizing operations for Gad Real Estates or building the digital presence for Inevitable Brands and Chops Paza, software thinking permeates every aspect. This involves not just coding, but designing scalable systems, understanding data flows, and applying logical problem-solving to business challenges.
+                        </p>
+                         <p>
+                            This unique blend of technical acumen and business leadership allows for the rapid development of prototypes, data-driven decision-making, and the creation of seamless digital experiences that set his companies apart.
+                        </p>
+                    </div>
+                    <div>
+                        <img src="https://placehold.co/600x400/212121/3b82f6?text=Code+%26+Innovation" alt="Abstract representation of code and innovation" class="se-image" onerror="this.src='https://placehold.co/600x400/212121/3b82f6?text=Code+%26+Innovation'; this.onerror=null;">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 text-center">
+                    <div class="bg-card p-6 rounded-lg border border-border-color transform transition duration-300 hover:scale-105 hover:border-accent">
+                        <i data-lucide="layers" class="feature-icon mx-auto"></i>
+                        <h4 class="text-xl font-semibold text-primary mb-2">System Architecture</h4>
+                        <p class="text-sm">Designing robust, scalable, and maintainable software architectures tailored to specific business needs, ensuring long-term viability.</p>
+                    </div>
+                    <div class="bg-card p-6 rounded-lg border border-border-color transform transition duration-300 hover:scale-105 hover:border-accent">
+                        <i data-lucide="code-2" class="feature-icon mx-auto"></i>
+                        <h4 class="text-xl font-semibold text-primary mb-2">Full-Stack Development</h4>
+                        <p class="text-sm">Hands-on expertise across the development stack, enabling rapid prototyping and the creation of end-to-end digital solutions.</p>
+                    </div>
+                    <div class="bg-card p-6 rounded-lg border border-border-color transform transition duration-300 hover:scale-105 hover:border-accent">
+                        <i data-lucide="rocket" class="feature-icon mx-auto"></i>
+                        <h4 class="text-xl font-semibold text-primary mb-2">Digital Transformation</h4>
+                        <p class="text-sm">Utilizing technology to streamline operations, enhance customer experiences, and unlock new growth opportunities across all ventures.</p>
+                    </div>
+                </div>
+
+                 <div class="mt-16 text-center">
+                     <p class="text-lg italic">"Technology is the bedrock upon which modern, resilient businesses are built. As a software engineer, I strive to embed that strength into every venture."</p>
+                     <p class="mt-2 text-sm font-semibold text-primary">- Thato E. Nwamadi</p>
+                 </div>
+
+            </div>
+        </section>
+
+
+        <section id="contact" class="section-padding text-center fade-in-section">
+            <div class="container mx-auto">
+                <h2 class="section-heading">Connect & Collaborate</h2>
+                <p class="section-subheading max-w-2xl">
+                    Ready to explore synergies, discuss groundbreaking ideas, or learn more about partnership opportunities? Let's connect.
+                </p>
+                <a href="mailto:info@example.com?subject=Collaboration%20Inquiry%20via%20Website%20-%20Thato%20Nwamadi" class="contact-button">
+                    Start the Conversation
+                </a>
+                 <div class="mt-16 flex justify-center space-x-8">
+                     <a href="#" aria-label="LinkedIn Profile" class="text-gray-400 hover:text-white transition-colors duration-300 transform hover:scale-110">
+                         <i data-lucide="linkedin" class="w-7 h-7"></i>
+                     </a>
+                     <a href="#" aria-label="Twitter Profile" class="text-gray-400 hover:text-white transition-colors duration-300 transform hover:scale-110">
+                         <i data-lucide="twitter" class="w-7 h-7"></i>
+                     </a>
+                     <a href="#" aria-label="GitHub Profile" class="text-gray-400 hover:text-white transition-colors duration-300 transform hover:scale-110">
+                         <i data-lucide="github" class="w-7 h-7"></i>
+                     </a>
+                 </div>
+            </div>
+        </section>
+
+        <footer class="text-slate-400">
+            <div class="container mx-auto px-6 text-center text-sm">
+                <p>&copy; <span id="current-year"></span> Thato Emeka Nwamadi. All Rights Reserved.</p>
+                <p class="mt-1 opacity-60 text-xs">Innovating Today, Building Tomorrow.</p>
+            </div>
+        </footer>
+
+    </div> <script>
+        // --- JavaScript for Animations and Functionality ---
+
+        // Function to safely run code after DOM is ready
+        function ready(fn) {
+          if (document.readyState !== 'loading'){
+            fn();
+          } else {
+            document.addEventListener('DOMContentLoaded', fn);
+          }
+        }
+
+        ready(() => {
+            // --- Lava Lamp Background ---
+            const canvas = document.getElementById('lava-lamp-bg');
+            // Ensure canvas exists before proceeding
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let width = canvas.width = window.innerWidth;
+                let height = canvas.height = window.innerHeight;
+                let blobs = [];
+                const numBlobs = Math.max(4, Math.floor(width / 250)); // Responsive number of blobs
+
+                // Blob class
+                class Blob {
+                    constructor() {
+                        this.x = Math.random() * width;
+                        this.y = Math.random() * height;
+                        // Make radius responsive, ensure minimum size
+                        this.radius = Math.random() * (Math.min(width, height) / 7) + (Math.min(width, height) / 12);
+                        this.vx = (Math.random() - 0.5) * 1.5; // Velocity x
+                        this.vy = (Math.random() - 0.5) * 1.5; // Velocity y
+                        // Use CSS variables for color safely
+                        try {
+                             this.color = Math.random() > 0.5 ? getComputedStyle(document.documentElement).getPropertyValue('--lava-color-1').trim() : getComputedStyle(document.documentElement).getPropertyValue('--lava-color-2').trim();
+                        } catch (e) {
+                            console.warn("Could not get lava colors from CSS, using fallback.", e);
+                            this.color = Math.random() > 0.5 ? 'rgba(59, 130, 246, 0.6)' : 'rgba(96, 165, 250, 0.5)'; // Fallback colors
+                        }
+                    }
+
+                    update() {
+                        this.x += this.vx;
+                        this.y += this.vy;
+
+                        // Bounce off edges
+                        if (this.x + this.radius > width || this.x - this.radius < 0) {
+                            this.vx *= -1;
+                        }
+                        if (this.y + this.radius > height || this.y - this.radius < 0) {
+                            this.vy *= -1;
+                        }
+                        // Ensure blobs stay within bounds after bounce
+                        this.x = Math.max(this.radius, Math.min(width - this.radius, this.x));
+                        this.y = Math.max(this.radius, Math.min(height - this.radius, this.y));
+                    }
+
+                    draw() {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                        ctx.fillStyle = this.color;
+                        ctx.fill();
+                    }
+                }
+
+                function initBlobs() {
+                    blobs = []; // Clear existing blobs on resize/init
+                     for (let i = 0; i < numBlobs; i++) {
+                        blobs.push(new Blob());
+                    }
+                }
+
+                let animationFrameId = null;
+                function animateLavaLamp() {
+                    ctx.clearRect(0, 0, width, height); // Clear canvas
+                    blobs.forEach(blob => {
+                        blob.update();
+                        blob.draw();
+                    });
+                    animationFrameId = requestAnimationFrame(animateLavaLamp); // Loop animation
+                }
+
+                 // Handle window resize
+                let resizeTimeout;
+                window.addEventListener('resize', () => {
+                    // Debounce resize event for performance
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => {
+                        width = canvas.width = window.innerWidth;
+                        height = canvas.height = window.innerHeight;
+                        // Cancel previous animation frame to prevent multiple loops after resize
+                        if (animationFrameId) {
+                            cancelAnimationFrame(animationFrameId);
+                        }
+                        initBlobs(); // Re-initialize blobs with new dimensions
+                        animateLavaLamp(); // Restart animation loop
+                    }, 250); // Adjust debounce delay as needed
+                });
+
+                // Initialize and start animation
+                initBlobs();
+                animateLavaLamp();
+            } else {
+                console.warn("Lava lamp canvas element not found.");
+            }
+
+
+            // --- Other Initializations ---
+
+            // 1. Animate Name on Load
+            const name = "Thato Emeka Nwamadi";
+            const animatedNameElement = document.getElementById('animated-name');
+            if (animatedNameElement) {
+                animatedNameElement.innerHTML = ''; // Clear
+                name.split('').forEach((char, index) => {
+                    const span = document.createElement('span');
+                    span.textContent = char === ' ' ? '\u00A0' : char; // Non-breaking space
+                    span.className = 'name-char';
+                    span.style.transitionDelay = `${index * 0.05}s`; // Stagger
+                    animatedNameElement.appendChild(span);
+                });
+
+                setTimeout(() => {
+                    const chars = animatedNameElement.querySelectorAll('.name-char');
+                    chars.forEach(char => {
+                        char.style.opacity = '1';
+                        char.style.transform = 'translateY(0) rotateX(0deg)';
+                    });
+                }, 100); // Small delay
+            }
+
+            // 2. Set Current Year in Footer
+            const currentYearElement = document.getElementById('current-year');
+            if (currentYearElement) {
+                currentYearElement.textContent = new Date().getFullYear();
+            }
+
+            // 3. Initialize Lucide Icons
+            if (typeof lucide !== 'undefined') {
+                try {
+                    lucide.createIcons();
+                } catch (error) {
+                    console.error("Error creating Lucide icons:", error);
+                }
+            } else {
+                 console.warn("Lucide library not found.");
+            }
+
+
+            // 4. Scroll Animations (Fade-in Sections & Timeline Items)
+            if ('IntersectionObserver' in window) {
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.1 // Trigger earlier for potentially taller sections
+                };
+
+                const observerCallback = (entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target); // Stop observing once visible
+                        }
+                    });
+                };
+
+                const scrollObserver = new IntersectionObserver(observerCallback, observerOptions);
+
+                // Observe all sections meant to fade in
+                document.querySelectorAll('.fade-in-section').forEach(el => {
+                    scrollObserver.observe(el);
+                });
+                 // Observe timeline items
+                 document.querySelectorAll('.timeline-item').forEach(el => {
+                    scrollObserver.observe(el);
+                });
+
+
+                // Add slight delay to venture card animations based on their position
+                 document.querySelectorAll('#ventures .venture-card').forEach((card, index) => {
+                     // Check if it's already visible (e.g., on fast scroll or reload)
+                     if (!card.classList.contains('is-visible')) {
+                        card.style.transition = `opacity 0.8s ease-out ${index * 0.1}s, transform 0.8s ease-out ${index * 0.1}s`;
+                     }
+                 });
+                  // Add slight delay to timeline item animations
+                 document.querySelectorAll('.timeline-item').forEach((item, index) => {
+                     if (!item.classList.contains('is-visible')) {
+                        item.style.transition = `opacity 0.6s ease-out ${index * 0.15}s, transform 0.6s ease-out ${index * 0.15}s`;
+                     }
+                 });
+            } else {
+                // Fallback for browsers without IntersectionObserver
+                document.querySelectorAll('.fade-in-section, .timeline-item').forEach(el => {
+                     el.style.opacity = '1';
+                     el.style.transform = 'translateY(0)';
+                });
+                 console.warn("IntersectionObserver not supported, scroll animations disabled.");
+            }
+
+
+            // 5. Sticky Navbar Background & Active Link Highlighting
+            const nav = document.getElementById('navbar');
+            const navLinks = nav ? Array.from(nav.querySelectorAll('a.nav-link')) : [];
+            const sections = Array.from(document.querySelectorAll('.content-wrapper > section[id]'));
+
+            function updateActiveLink() {
+                if (!nav || navLinks.length === 0 || sections.length === 0) return;
+
+                let currentSectionId = '';
+                // Adjust offset to account for sticky nav height + some buffer
+                const offset = nav.offsetHeight + 100;
+                const scrollPosition = window.scrollY + offset;
+
+                sections.forEach(section => {
+                    // Check if the top of the section is within the viewport activation zone
+                    if (scrollPosition >= section.offsetTop) {
+                        currentSectionId = section.id;
+                    }
+                });
+
+                 // Handle edge case for being at the very top
+                if (window.scrollY < (sections[0]?.offsetTop ?? 200) - offset) {
+                    currentSectionId = 'home';
+                }
+                // Handle edge case for being scrolled fully to the bottom
+                 if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+                    const lastSection = sections[sections.length - 1];
+                    if (lastSection) currentSectionId = lastSection.id;
+                 }
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${currentSectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            // Debounce scroll listener for performance
+            let scrollTimeout;
+            window.addEventListener('scroll', () => {
+                if (nav) {
+                    if (window.scrollY > 50) {
+                        nav.classList.add('scrolled');
+                    } else {
+                        nav.classList.remove('scrolled');
+                    }
+                }
+                // Clear previous timeout and set a new one
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(updateActiveLink, 100); // Adjust debounce delay
+            }, { passive: true });
+            updateActiveLink(); // Initial check
+
+
+            // 6. Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    const icon = mobileMenuButton.querySelector('i');
+                    if (icon && typeof lucide !== 'undefined') {
+                        icon.dataset.lucide = mobileMenu.classList.contains('hidden') ? 'menu' : 'x';
+                         try { lucide.createIcons(); } catch (e) { console.error(e); }
+                    }
+                });
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                         mobileMenu.classList.add('hidden');
+                         const icon = mobileMenuButton.querySelector('i');
+                         if (icon && typeof lucide !== 'undefined') {
+                             icon.dataset.lucide = 'menu';
+                             try { lucide.createIcons(); } catch (e) { console.error(e); }
+                         }
+                    });
+                });
+            }
+
+        }); // End DOMContentLoaded wrapper
+
+    </script>
+
+</body>
+</html>
