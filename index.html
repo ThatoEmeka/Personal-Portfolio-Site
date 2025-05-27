@@ -74,7 +74,7 @@
             backdrop-filter: blur(10px);
         }
         .nav-link {
-             @apply px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:bg-gray-700 hover:text-white transition-colors duration-200;
+             @apply px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:bg-gray-700 hover:text-white transition-colors duration-200 border border-gray-700; /* Added border */
         }
         .nav-link.active {
              @apply bg-gray-900 text-white;
@@ -541,8 +541,7 @@
         <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 py-3 transition-all duration-300">
             <div class="container mx-auto px-6 flex justify-between items-center">
                 <a href="#home" class="text-xl font-bold text-white">Thato Nwamadi</a>
-                <div class="hidden md:flex space-x-1">
-                    <a href="#home" class="nav-link active">Home</a>
+                <div class="hidden md:flex space-x-3"> <a href="#home" class="nav-link active">Home</a>
                     <a href="#about" class="nav-link">About</a>
                     <a href="#ventures" class="nav-link">Ventures</a>
                     <a href="#history" class="nav-link">History</a>
@@ -577,7 +576,7 @@
                     <div class="glitch-text" data-text="T.E.N">T.E.N</div>
                 </div>
 
-                <a href="#about" aria-label="Scroll down" class="absolute -bottom-16 left-1/2 transform -translate-x-1/2 text-white opacity-50 hover:opacity-100 transition-opacity animate-bounce hidden md:block">
+                <a href="#about" aria-label="Scroll down to learn more about Thato Nwamadi" class="absolute -bottom-16 left-1/2 transform -translate-x-1/2 text-white opacity-50 hover:opacity-100 transition-opacity animate-bounce hidden md:block">
                      <i data-lucide="arrow-down-circle" class="w-8 h-8"></i>
                 </a>
             </div>
@@ -596,7 +595,7 @@
                     <p>
                         Characterized by strategic acuity, resilience in the face of challenges, and a foundational belief in creating value beyond profit, Thato's leadership is transforming industries. His portfolio, spanning cutting-edge technology, strategic real estate development, compelling brand creation, and unique culinary concepts, reflects a modern, integrated approach to building sustainable and influential businesses.
                     </p>
-                     <img src="https://placehold.co/200x200/212121/a1a1aa?text=Thato" alt="Thato Nwamadi - Placeholder" class="w-36 h-36 rounded-full mx-auto mt-12 mb-4 shadow-xl border-4 border-gray-700" onerror="this.src='https://placehold.co/200x200/212121/a1a1aa?text=Thato'; this.onerror=null;">
+                     <img src="https://placehold.co/200x200/212121/a1a1aa?text=Thato" alt="Portrait of Thato Nwamadi, a visionary entrepreneur and software engineer" class="w-36 h-36 rounded-full mx-auto mt-12 mb-4 shadow-xl border-4 border-gray-700" onerror="this.src='https://placehold.co/200x200/212121/a1a1aa?text=Thato+Nwamadi+Profile'; this.onerror=null;">
                 </div>
             </div>
         </section>
@@ -653,26 +652,26 @@
             <h3 class="text-center text-lg font-medium text-slate-400 mb-8 tracking-wider uppercase">Associated Ventures & Partners</h3>
             <div class="logo-carousel-container">
                 <div class="logo-track">
-                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Tech" alt="Inevitable Tech Logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Tech'; this.onerror=null;"></div>
-                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Gad+Real+Estates" alt="Gad Real Estates Logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Gad+Real+Estates'; this.onerror=null;"></div>
-                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Brands" alt="Inevitable Brands Logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Brands'; this.onerror=null;"></div>
-                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Chops+Paza" alt="Chops Paza Logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Chops+Paza'; this.onerror=null;"></div>
-                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Bright+Start" alt="Partner Logo 1" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+1'; this.onerror=null;"></div>
-                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=The+Banquet" alt="Partner Logo 2" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+2'; this.onerror=null;"></div>
-                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=K+Investments" alt="Partner Logo 3" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+3'; this.onerror=null;"></div>
-                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=ECDC" alt="Partner Logo 4" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+4'; this.onerror=null;"></div>
-                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Brands" alt="Partner Logo 5" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+5'; this.onerror=null;"></div>
-                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Interim+COnsulting" alt="Partner Logo 6" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+6'; this.onerror=null;"></div>
-                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Tech" alt="Inevitable Tech Logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Tech'; this.onerror=null;"></div>
-                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Gad+Real+Estates" alt="Gad Real Estates Logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Gad+Real+Estates'; this.onerror=null;"></div>
-                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Brands" alt="Inevitable Brands Logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Brands'; this.onerror=null;"></div>
-                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Chops+Paza" alt="Chops Paza Logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Chops+Paza'; this.onerror=null;"></div>
-                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=FAR+African+Royals" alt="Partner Logo 1" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+1'; this.onerror=null;"></div>
-                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=NED+App" alt="Partner Logo 2" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+2'; this.onerror=null;"></div>
-                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Bright+Star+Foundation" alt="Partner Logo 3" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+3'; this.onerror=null;"></div>
-                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Coronet" alt="Partner Logo 4" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+4'; this.onerror=null;"></div>
-                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Nwmadi+Foundation" alt="Partner Logo 5" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+5'; this.onerror=null;"></div>
-                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=GN+Removals" alt="Partner Logo 6" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+6'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Tech" alt="Inevitable Tech company logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Tech+Logo'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Gad+Real+Estates" alt="Gad Real Estates company logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Gad+Real+Estates+Logo'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Brands" alt="Inevitable Brands company logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Brands+Logo'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Chops+Paza" alt="Chops Paza restaurant logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Chops+Paza+Logo'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Bright+Start" alt="Bright Start partner logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+1+Logo'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=The+Banquet" alt="The Banquet partner logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+2+Logo'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=K+Investments" alt="K Investments partner logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+3+Logo'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=ECDC" alt="ECDC partner logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+4+Logo'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Brands" alt="Inevitable Brands partner logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+5+Logo'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Interim+COnsulting" alt="Interim Consulting partner logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+6+Logo'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Tech" alt="Inevitable Tech company logo (duplicate for carousel)" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Tech+Logo'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Gad+Real+Estates" alt="Gad Real Estates company logo (duplicate for carousel)" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Gad+Real+Estates+Logo'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Brands" alt="Inevitable Brands company logo (duplicate for carousel)" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Inevitable+Brands+Logo'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Chops+Paza" alt="Chops Paza restaurant logo (duplicate for carousel)" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Chops+Paza+Logo'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=FAR+African+Royals" alt="FAR African Royals partner logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+1+Logo'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=NED+App" alt="NED App partner logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+2+Logo'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Bright+Star+Foundation" alt="Bright Star Foundation partner logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+3+Logo'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Coronet" alt="Coronet partner logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+4+Logo'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=Nwmadi+Foundation" alt="Nwamadi Foundation partner logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+5+Logo'; this.onerror=null;"></div>
+                    <div class="logo-item"><img src="https://placehold.co/150x60/212121/a1a1aa?text=GN+Removals" alt="GN Removals partner logo" onerror="this.src='https://placehold.co/150x60/212121/a1a1aa?text=Partner+6+Logo'; this.onerror=null;"></div>
                 </div>
             </div>
         </section>
@@ -733,7 +732,7 @@
                         </p>
                     </div>
                     <div>
-                        <img src="https://placehold.co/600x400/212121/3b82f6?text=Code+%26+Innovation" alt="Abstract representation of code and innovation" class="se-image" onerror="this.src='https://placehold.co/600x400/212121/3b82f6?text=Code+%26+Innovation'; this.onerror=null;">
+                        <img src="https://placehold.co/600x400/212121/3b82f6?text=Code+%26+Innovation" alt="Abstract image representing software code and innovation, with glowing lines and geometric shapes" class="se-image" onerror="this.src='https://placehold.co/600x400/212121/3b82f6?text=Code+%26+Innovation'; this.onerror=null;">
                     </div>
                 </div>
 
@@ -774,13 +773,13 @@
                     Start the Conversation
                 </a>
                  <div class="mt-16 flex justify-center space-x-8">
-                     <a href="#" aria-label="LinkedIn Profile" class="text-gray-400 hover:text-white transition-colors duration-300 transform hover:scale-110">
+                     <a href="#" aria-label="Connect with Thato Nwamadi on LinkedIn" class="text-gray-400 hover:text-white transition-colors duration-300 transform hover:scale-110">
                          <i data-lucide="linkedin" class="w-7 h-7"></i>
                      </a>
-                     <a href="#" aria-label="Twitter Profile" class="text-gray-400 hover:text-white transition-colors duration-300 transform hover:scale-110">
+                     <a href="#" aria-label="Follow Thato Nwamadi on Twitter" class="text-gray-400 hover:text-white transition-colors duration-300 transform hover:scale-110">
                          <i data-lucide="twitter" class="w-7 h-7"></i>
                      </a>
-                     <a href="#" aria-label="GitHub Profile" class="text-gray-400 hover:text-white transition-colors duration-300 transform hover:scale-110">
+                     <a href="#" aria-label="View Thato Nwamadi's projects on GitHub" class="text-gray-400 hover:text-white transition-colors duration-300 transform hover:scale-110">
                          <i data-lucide="github" class="w-7 h-7"></i>
                      </a>
                  </div>
@@ -794,7 +793,8 @@
             </div>
         </footer>
 
-    </div> <script>
+    </div>
+    <script>
         // --- JavaScript for Animations and Functionality ---
 
         // Function to safely run code after DOM is ready
