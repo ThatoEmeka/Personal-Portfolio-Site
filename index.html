@@ -123,6 +123,21 @@
             transform-origin: bottom center;
         }
 
+        /* Mobile Name Fix - Keep name on single line */
+        @media screen and (max-width: 768px) {
+            .hero-content h1 {
+                white-space: nowrap; /* Prevent text wrapping */
+            }
+            .name-char {
+                font-size: clamp(2rem, 8vw, 4rem); /* Reduce max size on mobile for better fit */
+            }
+        }
+        @media screen and (max-width: 480px) {
+            .name-char {
+                font-size: clamp(1.8rem, 8vw, 3.5rem); /* Even smaller on very narrow screens */
+            }
+        }
+
         .hero-tagline {
             color: var(--text-secondary);
             font-size: clamp(1rem, 3vw, 1.25rem);
