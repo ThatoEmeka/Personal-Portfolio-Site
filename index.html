@@ -325,12 +325,16 @@
 
         /* Logo Carousel Section */
         .logo-carousel-section {
-            @apply py-24 md:py-32; /* Increased padding for more prominence */
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(59, 130, 246, 0.05) 50%, var(--bg-secondary) 100%); /* Gradient background for better visual appeal */
+            @apply py-32 md:py-48; /* Increased padding for bigger presence */
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(59, 130, 246, 0.1) 50%, var(--bg-secondary) 100%); /* Enhanced gradient background */
             overflow: hidden; /* Hide overflowing logos */
             position: relative; /* For pseudo-elements if needed */
             border-top: 1px solid var(--border-color); /* Subtle top border */
             border-bottom: 1px solid var(--border-color); /* Subtle bottom border */
+            /* Add subtle shadow and rounded corners for a card-like effect */
+            box-shadow: inset 0 0 20px rgba(59, 130, 246, 0.1);
+            border-radius: 16px;
+            margin: 2rem; /* Add margin around the section */
         }
         .logo-carousel-container {
             width: 100%;
@@ -341,33 +345,45 @@
         .logo-track {
             display: flex;
             /* Double the logos for seamless looping */
-            animation: scroll 30s linear infinite;
-            width: calc(230px * 10 * 2); /* Adjusted for larger logos */
+            animation: scroll 25s linear infinite;
+            width: calc(250px * 10 * 2); /* Adjusted for uniform larger logos */
+            gap: 20px; /* Add consistent gap between items */
         }
         .logo-track:hover {
             animation-play-state: paused; /* Pause on hover */
         }
 
         .logo-item {
-            width: 180px; /* Increased width for larger logos */
-            height: 80px; /* Increased height for larger logos */
-            margin: 0 30px; /* Increased spacing between logos */
+            width: 200px; /* Uniform width for all logos */
+            height: 80px; /* Uniform height for all logos */
+            margin: 0 35px; /* Consistent spacing between logos */
             flex-shrink: 0; /* Prevent logos from shrinking */
             display: flex;
             align-items: center;
             justify-content: center;
+            border-radius: 8px; /* Subtle rounding for modern uniform look */
+            /* background-color: rgba(33, 33, 33, 0.5); Subtle background if needed */
         }
         .logo-item img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
             filter: grayscale(100%) opacity(0.5) contrast(1.1); /* Enhanced filter for better visibility */
-            transition: filter 0.4s ease, transform 0.4s ease; /* Smoother transitions */
+            transition: filter 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease; /* Smoother transitions */
+            /* Add subtle floating animation */
+            animation: float 6s ease-in-out infinite;
         }
          .logo-item:hover img {
              filter: grayscale(0%) opacity(1) brightness(1.1); /* Full color with slight brightness boost */
              transform: scale(1.05); /* Subtle hover scale */
+             box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3); /* Add glowing effect */
          }
+
+        /* Floating animation keyframes */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
 
         @keyframes scroll {
             0% { transform: translateX(0); }
