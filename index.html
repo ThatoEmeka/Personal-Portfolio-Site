@@ -28,6 +28,7 @@
             --border-color: rgba(255, 255, 255, 0.1); /* Subtle white border */
             --lava-color-1: rgba(59, 130, 246, 0.6); /* Blue 500 with opacity */
             --lava-color-2: rgba(96, 165, 250, 0.5); /* Blue 400 with opacity */
+            --nav-bg: rgba(26, 26, 26, 0.85); /* Semi-transparent charcoal on scroll */
         }
 
         body {
@@ -70,14 +71,26 @@
             transition: background-color 0.3s ease;
         }
         nav.scrolled {
-            background-color: rgba(26, 26, 26, 0.85); /* Semi-transparent charcoal on scroll */
+            background-color: var(--nav-bg); /* Use CSS variable for theme-aware nav background */
             backdrop-filter: blur(10px);
         }
         .nav-link {
-             @apply px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:bg-gray-700 hover:text-white transition-colors duration-200 border border-gray-700; /* Added border */
+             color: var(--text-secondary) !important; /* Use CSS variables for theme-aware colors */
+             @apply px-3 py-2 rounded-md text-sm font-medium hover:text-white transition-colors duration-200 border border-gray-700; /* Removed static color from hover background */
         }
         .nav-link.active {
              @apply bg-gray-900 text-white;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            @apply px-3 py-2 rounded-md text-sm font-medium border transition-colors duration-200;
+            color: var(--text-secondary);
+            border-color: var(--border-color);
+            background: transparent;
+        }
+        .theme-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
 
@@ -205,11 +218,11 @@
         }
         /* Default vertical padding */
         #about, #history, #software-engineer, #contact {
-             @apply py-20 md:py-28;
+             @apply py-32 md:py-44;
         }
         /* Increased vertical padding for Ventures */
         #ventures {
-             @apply py-28 md:py-40; /* Increased vertical padding */
+             @apply py-40 md:py-56; /* Increased vertical padding */
         }
 
         .section-heading {
@@ -297,10 +310,12 @@
 
         /* Logo Carousel Section */
         .logo-carousel-section {
-            @apply py-16 md:py-20; /* Padding for the section */
-            background-color: var(--bg-secondary); /* Slightly different background */
+            @apply py-24 md:py-32; /* Increased padding for more prominence */
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(59, 130, 246, 0.05) 50%, var(--bg-secondary) 100%); /* Gradient background for better visual appeal */
             overflow: hidden; /* Hide overflowing logos */
             position: relative; /* For pseudo-elements if needed */
+            border-top: 1px solid var(--border-color); /* Subtle top border */
+            border-bottom: 1px solid var(--border-color); /* Subtle bottom border */
         }
         .logo-carousel-container {
             width: 100%;
@@ -312,16 +327,16 @@
             display: flex;
             /* Double the logos for seamless looping */
             animation: scroll 30s linear infinite;
-            width: calc(200px * 10 * 2); /* Adjust 200px (logo width + margin) and 10 (number of logos) as needed */
+            width: calc(230px * 10 * 2); /* Adjusted for larger logos */
         }
         .logo-track:hover {
             animation-play-state: paused; /* Pause on hover */
         }
 
         .logo-item {
-            width: 150px; /* Adjust width */
-            height: 60px; /* Adjust height */
-            margin: 0 25px; /* Spacing between logos */
+            width: 180px; /* Increased width for larger logos */
+            height: 80px; /* Increased height for larger logos */
+            margin: 0 30px; /* Increased spacing between logos */
             flex-shrink: 0; /* Prevent logos from shrinking */
             display: flex;
             align-items: center;
@@ -331,11 +346,12 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            filter: grayscale(100%) opacity(0.6); /* Start grayscale and slightly transparent */
-            transition: filter 0.3s ease;
+            filter: grayscale(100%) opacity(0.5) contrast(1.1); /* Enhanced filter for better visibility */
+            transition: filter 0.4s ease, transform 0.4s ease; /* Smoother transitions */
         }
          .logo-item:hover img {
-             filter: grayscale(0%) opacity(1); /* Full color and opacity on hover */
+             filter: grayscale(0%) opacity(1) brightness(1.1); /* Full color with slight brightness boost */
+             transform: scale(1.05); /* Subtle hover scale */
          }
 
         @keyframes scroll {
@@ -550,14 +566,21 @@
         <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 py-3 transition-all duration-300">
             <div class="container mx-auto px-6 flex justify-between items-center">
                 <a href="#home" class="text-xl font-bold text-white">Thato Nwamadi</a>
-                <div class="hidden md:flex space-x-3"> <a href="#home" class="nav-link active">Home</a>
+                <div class="hidden md:flex items-center space-x-3">
+                    <a href="#home" class="nav-link active">Home</a>
                     <a href="#about" class="nav-link">About</a>
                     <a href="#ventures" class="nav-link">Ventures</a>
                     <a href="#history" class="nav-link">History</a>
                     <a href="#software-engineer" class="nav-link">Software</a>
                     <a href="#contact" class="nav-link">Contact</a>
+                    <button id="theme-toggle" class="theme-toggle" title="Toggle Theme">
+                        <i data-lucide="sun" class="w-5 h-5"></i>
+                    </button>
                 </div>
-                <div class="md:hidden">
+                <div class="md:hidden flex items-center space-x-3">
+                    <button id="theme-toggle-mobile" class="theme-toggle" title="Toggle Theme">
+                        <i data-lucide="sun" class="w-5 h-5 block md:hidden"></i>
+                    </button>
                     <button id="mobile-menu-button" class="text-white focus:outline-none">
                         <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
@@ -604,7 +627,7 @@
                     <p>
                         Characterized by strategic acuity, resilience in the face of challenges, and a foundational belief in creating value beyond profit, Thato's leadership is transforming industries. His portfolio, spanning cutting-edge technology, strategic real estate development, compelling brand creation, and unique culinary concepts, reflects a modern, integrated approach to building sustainable and influential businesses.
                     </p>
-                     <img src="https://placehold.co/200x200/212121/a1a1aa?text=Thato" alt="Portrait of Thato Nwamadi, a visionary entrepreneur and software engineer" class="w-36 h-36 rounded-full mx-auto mt-12 mb-4 shadow-xl border-4 border-gray-700" onerror="this.src='https://placehold.co/200x200/212121/a1a1aa?text=Thato+Nwamadi+Profile'; this.onerror=null;">
+                     <img src="me.png" alt="Portrait of Thato Nwamadi, a visionary entrepreneur and software engineer" class="w-36 h-36 rounded-full mx-auto mt-12 mb-4 shadow-xl border-4 border-gray-700 object-cover" onerror="this.src='https://placehold.co/200x200/212121/a1a1aa?text=Thato+Nwamadi+Profile'; this.onerror=null;">
                 </div>
             </div>
         </section>
@@ -741,7 +764,7 @@
                         </p>
                     </div>
                     <div>
-                        <img src="https://placehold.co/600x400/212121/3b82f6?text=Code+%26+Innovation" alt="Abstract image representing software code and innovation, with glowing lines and geometric shapes" class="se-image" onerror="this.src='https://placehold.co/600x400/212121/3b82f6?text=Code+%26+Innovation'; this.onerror=null;">
+                        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Abstract image representing software code and innovation, with glowing lines and geometric shapes" class="se-image" onerror="this.src='https://placehold.co/600x400/212121/3b82f6?text=Code+%26+Innovation'; this.onerror=null;">
                     </div>
                 </div>
 
@@ -1059,7 +1082,14 @@
             updateActiveLink(); // Initial check
 
 
-            // 6. Mobile Menu Toggle
+            // --- Theme Toggle Functionality (Removed - Now Dark Only) ---
+            // Keep theme buttons hidden but prevent errors if they exist
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+            if (themeToggle) themeToggle.style.display = 'none';
+            if (themeToggleMobile) themeToggleMobile.style.display = 'none';
+
+            // --- Mobile Menu Toggle ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
 
